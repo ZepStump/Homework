@@ -37,5 +37,11 @@ class JUnitDemo {
 		
 	//	fail("Not yet implemented");
 	}
+	
+	@Test
+	void testRemoveEntry() {
+		assertEquals(directory.removeEntry("EH"), null);
+		assertEquals(directory.removeEntry("AB").getName(), "AB");
+	}
 
 }
