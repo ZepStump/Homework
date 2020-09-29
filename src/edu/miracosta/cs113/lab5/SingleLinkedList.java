@@ -1,6 +1,4 @@
-package lab5;
-
-
+package edu.miracosta.cs113.lab5;
 
 public class SingleLinkedList<E> {
 
@@ -260,3 +258,4 @@ public class SingleLinkedList<E> {
 		
 	}
 }
+

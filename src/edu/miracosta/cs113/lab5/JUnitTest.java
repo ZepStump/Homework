@@ -1,4 +1,4 @@
-package lab5;
+package edu.miracosta.cs113.lab5;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -8,7 +8,7 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-class JUnitDemo {
+class JUnitTest {
 
 	@BeforeAll
 	static void setUpBeforeClass() throws Exception {
