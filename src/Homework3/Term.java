@@ -25,74 +25,85 @@ public class Term implements Comparable<Term>
 	
 	public Term(String t)
 	{
-		int a=0,b=0,c=0,e=0;
-		char signC='+',signE='+';
 		exponent=0;
 		coefficient=0;
-
-		//checking for coefficient sign
+	
+		
+		int a=0,b=0,c=0,e=0;
+		
+		char signC='+',signE='+';
+		//sign of coefficient
+		
 		if (t.charAt(0)=='+')
-		b=1;
-		if (t.charAt(0)=='-')
 		{
 			b=1;
+			c=1;
+		}	
+		if(t.charAt(0)=='-')
+		{
+			b=1;
+			c=1;
 			signC='-';
 		}
 		
+		
 		for (int i=0;i<t.length();i++)
 		{
-			if (t.charAt(i)=='^')
+			if (t.charAt(i)=='x')
 			{
 				a=i;
-				e=a;
-			}	
+				e=1;
+			}
 		}
-		if (a!=0) 
+		//if exponent not zero
+		if (a!=0)
 		{
-		if(t.charAt(a+1)=='-')
-		{
-			e=a+1;
-			signE='-';
-		}
-		for (int i=e+1;i<t.length();i++)
-		{
-			int d=(int)t.charAt(i);
-			exponent=10*exponent+d;
-		}
-		for (int i=b;i<a-1;i++)
-		{
-			int d=(int)t.charAt(i);
-			coefficient=10*coefficient+d;
-		}
-		}
-		if (a==0)
-		{
-			for (int i=0;i<t.length();i++)
+			for (int i=b;i<a;i++)
 			{
-				if (t.charAt(i)=='x')
-				{
-					exponent=1;
-					c=i;
+				int d=(int)t.charAt(i)-'0';
+				coefficient=10*coefficient+d;
+			}
+			for (int i=b;i<t.length();i++)
+			{
+				if (t.charAt(i)=='^')
+					a=i;
+				if (t.charAt(i)=='-')
+				{	
+					signE='-';
+					a=i;
 				}	
 			}
-			if (c==0)
-				c=t.length();
-			for (int i=b;i<c;i++)
+			for (int i=a+1;i<t.length();i++)
 			{
-				int d=(int)t.charAt(i);
-				coefficient=10*coefficient+d;
+				int d=(int)t.charAt(i)-'0';
+				exponent=exponent*10+d;
 			}
 		}
 		
-		if (signC=='-')
+		if (a==0)
 		{
-			coefficient=-coefficient;		
+			for (int i=b;i<t.length();i++)
+			{
+				int d=(int)t.charAt(i)-'0';
+				coefficient=(10*coefficient)+d;	
+			}
 		}
+		
+		
+		
+		if((coefficient==0)&&(c==1))
+			coefficient=1;
+		if((exponent==0)&&(e==1))
+			exponent=1;
+		
 		if (signE=='-')
 		{
 			exponent=-exponent;
 		}
-		
+		if(signC=='-')
+		{
+			coefficient=-coefficient;
+		}
 	}
 	
 	@Override
