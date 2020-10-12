@@ -141,6 +141,7 @@ public class PolynomialTest {
             //remove whitespace from Strings, more flexible testing (doesn't depend on whitespace matching)
             expected = UNIQUE_POLY1[i].replaceAll(" ", "");
             actual = test.toString().replaceAll(" ", "");
+            
 
             assertEquals("Expected and actual polynomial toString DON'T match", expected, actual);
         }
@@ -218,6 +219,8 @@ public class PolynomialTest {
         //add duplicate terms and test size does not grow
         for(int i = finalSize; i < DUPLICATE_TERMS.length; i++) {
             test.addTerm(DUPLICATE_TERMS[i]);
+            
+            
             assertEquals("Term was added but DIDN'T combine like terms (matching exponents",
                     finalSize, test.getNumTerms());
         }
@@ -231,11 +234,13 @@ public class PolynomialTest {
         for(Term t : DUPLICATE_TERMS) {
             test.addTerm(t);
         }
+        
 
         //test final polynomial, each term ending up in correct position
         for(int i = 0; i < DUPLICATE_FINAL_ORDER.length; i++) {
             actualOrderedTerm = test.getTerm(i);
             expectedOrderedTerm = DUPLICATE_FINAL_ORDER[i];
+            
 
             assertEquals("Expected and actual term DON'T match", expectedOrderedTerm, actualOrderedTerm);
         }
@@ -268,10 +273,16 @@ public class PolynomialTest {
         }
 
         test1.add(test2);
+        
+        for (int i=0;i<test1.list.size();i++)
+        {
+        	System.out.println(test1.getTerm(i).toString());
+        }
 
         for(int i = 0; i < test1.getNumTerms(); i++) {
             actualTerm = test1.getTerm(i);
             expectedTerm = UNIQUE_ADD_ORDER[i];
+            
 
             assertEquals("Expected and actual term DON'T match", expectedTerm, actualTerm);
         }
@@ -287,6 +298,7 @@ public class PolynomialTest {
         }
 
         copy = new Polynomial(original);
+        
 
         assertTrue("Shallow copy of Polynomial object", original != copy);
 
