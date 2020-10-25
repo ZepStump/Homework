@@ -99,6 +99,31 @@ public class DoubleLinkedList<E> extends AbstractSequentialList<E>
         return returnValue;
   }
   
+  public boolean remove(Object o)
+  {
+	  ListIterator<E> iter = listIterator();
+	  int a=0;
+	  for (int i=0;i<size;i++)
+	  {
+		  if ((iter.next().equals(o))&&(a==0))
+		  {
+			  iter.remove();
+			  a=1;
+		  }
+	  }
+	  if (a==1)
+		  return true;
+	  else
+		  return false;
+  }
+  public boolean isEmpty()
+  {
+	  if (size!=0)
+		  return false;
+	  else
+		  return true;
+  }
+  
   public int lastIndexOf(Object o)
   {
 	  ListIterator<E> iter = listIterator();
@@ -189,7 +214,30 @@ public class DoubleLinkedList<E> extends AbstractSequentialList<E>
     	return index;   
     	}
     public void set(E o)  {
-    	nextItem = new Node<E>(o);
+    	Node<E> newNode = new Node<E>(o);
+    	if(lastItemReturned==null)
+    	{
+    		throw new IllegalStateException();
+    	}	
+    	else if(lastItemReturned==head)
+    	{
+    		newNode.next=head.next;
+    		head.next.prev=newNode;
+    		head=newNode;
+    	}
+    	else if(lastItemReturned==tail)
+    	{
+    		newNode.next=null;
+    		tail.prev.next=newNode;
+    		tail=newNode;
+    	}
+    	else
+    	{
+    		lastItemReturned.next.prev = newNode;
+    		lastItemReturned.prev.next = newNode;
+    		newNode.prev=lastItemReturned.prev;
+    		newNode.next=lastItemReturned.next;
+    	}
     } 
     public void remove(){
     	
