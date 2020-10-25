@@ -53,6 +53,7 @@ public class DoubleLinkedList<E> extends AbstractSequentialList<E>
 		  throw new IndexOutOfBoundsException();
 	  }
 	  ListIterator<E> iter = listIterator(index); 
+	  iter.next();
       iter.set(obj);
       return iter.next();
   }
