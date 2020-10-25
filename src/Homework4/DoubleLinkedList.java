@@ -70,7 +70,7 @@ public class DoubleLinkedList<E> extends AbstractSequentialList<E>
 	  int b=0;
 	  for (int i=0;i<size;i++)
 	  {
-		  if((iter.next().equals(0))&&(b==0))
+		  if((iter.next().equals(o))&&(b==0))
 		  {
 			  a=i;
 			  b=1;
@@ -97,6 +97,20 @@ public class DoubleLinkedList<E> extends AbstractSequentialList<E>
         }
         else {   throw new IndexOutOfBoundsException();  }
         return returnValue;
+  }
+  
+  public int lastIndexOf(Object o)
+  {
+	  ListIterator<E> iter = listIterator();
+	  int a=-1;
+	  for (int i=0;i<size;i++)
+	  {
+		  if(iter.next().equals(o))
+		  {
+			  a=i;
+		  }  
+	  }
+	  return a;
   }
 
   public Iterator iterator() { 
@@ -172,35 +186,61 @@ public class DoubleLinkedList<E> extends AbstractSequentialList<E>
     	return a;    
     	}
     public int nextIndex() {
-    	int a = index;
-    	a++;
-    	return a;   
+    	return index;   
     	}
     public void set(E o)  {
     	nextItem = new Node<E>(o);
     } 
     public void remove(){
-    	if (nextItem==null)
+    	
+    	/*if (nextItem==head)
     	{
     		throw new IllegalStateException();
     	}
-    	else if (nextItem==head)
+    	else if(nextItem.prev==head)
     	{
-    		nextItem.next.prev=null;
-    		head=nextItem.next;
-    		nextItem=head;
+    		nextItem.prev=null;
+    		head=nextItem;
+    		index--;
     	}
-    	else if (nextItem==tail)
+    	else if(nextItem==null)
     	{
     		nextItem.prev.next=null;
-    		tail=nextItem.prev;
+    		nextItem=nextItem.prev;
     		index--;
     	}
     	else
     	{
-    		nextItem.prev.next=nextItem.next;
-    		nextItem.next.prev=nextItem.prev;
-    		nextItem=nextItem.next;
+    		nextItem.prev.prev.next=nextItem;
+    		nextItem.prev=nextItem.prev.prev;
+    		index--;
+    	}*/
+    	
+    	if (lastItemReturned==null)
+    	{
+    		throw new IllegalStateException();
+    	}
+    	else if (lastItemReturned==head)
+    	{
+    		lastItemReturned.next.prev=null;
+    		head=lastItemReturned.next;
+    	}
+    	else if (lastItemReturned==tail)
+    	{
+    		lastItemReturned.prev.next=null;
+    		tail=lastItemReturned.prev;
+    		if(nextItem==lastItemReturned)
+    		index--;
+    	}
+    	else
+    	{
+    		lastItemReturned.prev.next=lastItemReturned.next;
+    		lastItemReturned.next.prev=lastItemReturned.prev;
+    		if(nextItem==lastItemReturned)
+    		{
+        		index--;
+        		nextItem=nextItem.next;
+    		}	
     	}
     }
 
