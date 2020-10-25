@@ -117,6 +117,34 @@ public class DoubleLinkedList<E> extends AbstractSequentialList<E>
 	  else
 		  return false;
   }
+  
+  public boolean contains(Object o)
+  {
+	  ListIterator<E> iter = listIterator();
+	  int a=0; 
+	  for (int i=0; i<size;i++)
+	  {
+		  if (iter.next().equals(o))
+		  {
+			  a=1;
+		  }
+	  }
+	  if (a==1)
+		  return true;
+	  else
+		  return false;
+  }
+  
+  public boolean equals(Object o)
+  {
+	  if (this==o)
+	  {
+		  return true;
+	  }
+	  else
+		  return false;
+  }
+  
   public boolean isEmpty()
   {
 	  if (size!=0)
@@ -291,6 +319,7 @@ public class DoubleLinkedList<E> extends AbstractSequentialList<E>
         		nextItem=nextItem.next;
     		}	
     	}
+    	size--;
     }
 
     public E next()
