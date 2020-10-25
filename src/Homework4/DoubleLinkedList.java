@@ -192,6 +192,10 @@ public class DoubleLinkedList<E> extends AbstractSequentialList<E>
         {  
         	data = dataItem; 
         }
+        public String toString()
+        {
+        	return "" + data;
+        }
   }  // end class Node
 
   public class ListIter implements ListIterator<E> 
@@ -315,7 +319,7 @@ public class DoubleLinkedList<E> extends AbstractSequentialList<E>
     		lastItemReturned.next.prev=lastItemReturned.prev;
     		if(nextItem==lastItemReturned)
     		{
-        		index--;
+        		//index--;
         		nextItem=nextItem.next;
     		}	
     	}
@@ -374,7 +378,7 @@ public class DoubleLinkedList<E> extends AbstractSequentialList<E>
     	else
     	{
     		Node<E> newNode = new Node<E>(obj);
-    		newNode.prev = newNode.prev;
+    		newNode.prev = nextItem.prev;
     		nextItem.prev.next = newNode;
     		newNode.next = nextItem;
     		nextItem.prev = newNode;
