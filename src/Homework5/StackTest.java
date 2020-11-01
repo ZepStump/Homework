@@ -21,7 +21,7 @@ public class StackTest {
     /** This function is executed every single time before each test runs. */
     @Before
     public void setup() {
-        stack = new Stack<Integer>();
+        stack = new ArrayListStack<Integer>();
     }
 
     @Test

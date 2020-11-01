@@ -4,7 +4,7 @@ import java.util.EmptyStackException;
 /** Implementation of the interface StackInt<E> using
  *  an array.
  */
-public class Stack<E> implements StackInterface<E> {
+public class ArrayListStack<E> implements StackInterface<E> {
 
     // Data Fields
     /** Storage for stack. */
@@ -17,7 +17,7 @@ public class Stack<E> implements StackInterface<E> {
      * Construct an empty stack with the default
      * initial capacity.
      */
-    public Stack() {
+    public ArrayListStack() {
         theData = (E[]) new Object[INITIAL_CAPACITY];
     }
 
@@ -91,3 +91,4 @@ public class Stack<E> implements StackInterface<E> {
         theData = temp;
     }
 }
+
