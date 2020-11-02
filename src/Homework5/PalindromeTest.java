@@ -42,8 +42,44 @@ public class PalindromeTest {
      */
     private boolean isPalindrome(String s) {
 
-        // TODO:
-        // Implement this method body using your ArrayListStack. Be mindful of your algorithm!
+        ArrayListStack<Character> stack = new ArrayListStack<Character>();
+        //Throwing an exception
+        if (s==null)
+        	throw new IllegalArgumentException();
+        s=s.replaceAll(" ", "");
+        s=s.toLowerCase();
+        //checking if string is empty
+        if (s.length()==0)
+        	return true;
+        //making a stack
+        for (int i=0;i<s.length();i++)
+        {
+        	stack.push(s.charAt(i));
+        	//System.out.println(s.charAt(i));
+        }
+        //checking if first and last are the same
+        char a1=stack.peek();
+        char a2=' ';
+        while (!stack.empty())
+        {
+        	a2=stack.pop();
+        }
+        //System.out.println(a2);
+        if (a2==a1)
+        {
+        	//checking if the sting is already not too small, base recursion case
+        	if (s.length()<3)
+        	{
+        		return true;
+        	}
+        	//if first and last are the same then using a recursion
+        	else
+        	{
+        	//System.out.println(s.substring(1,s.length()));
+        	return isPalindrome(s.substring(1,s.length()-1));
+        	}
+        }
+        else
         return false;
 
     } // End of method isPalindrome
