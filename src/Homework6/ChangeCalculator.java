@@ -36,6 +36,8 @@ public class ChangeCalculator {
     	 * calculate when there is only one quarter by passing the rest to calculateNoQuater 
     	 * and so on till I reach max of the quarters.
     	 */
+    	//this method is quite hard, but it uses the recursion, in the print method there is 
+    	//less hard and probably more efficient method;
     	int k=cents/25;
     	int total = 0;
     	for (int i=0;i<=k;i++)
