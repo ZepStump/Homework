@@ -1,7 +1,5 @@
 package Homework6;
 
-//import java.io.FileOutputStream;
-//import java.io.FileWriter;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 
@@ -101,26 +99,41 @@ public class ChangeCalculator {
     		  list.add(0);
     		  list.add(0);
     		  list.add(0);
-    		
+    		  
+    		  /*Here it is pretty much does the same thing as in previous method but 
+    		   * without recursion. I just go thought all the possible values of the
+    		   * number of quarters from 0 to max, for each combinations of quarters
+    		   * I go through the possible number of dimes, then for each dime number
+    		   * I go through possible number of nickels and then I for each number of 
+    		   * nickels there is only one combination of pennies, since they all have to
+    		   * be there.
+    		   */
     		  int k1=cents/25;
     		  for (int i1=0;i1<=k1;i1++)
     		  {
+    			 //setting current number of quarters
     			 list.set(0, i1);
+    			 //we have to subtract because these cents are already in the quarters
     			 int k2=(cents-25*i1)/10;
     			 for (int i2=0;i2<=k2;i2++)
     			 {
+    				 //setting current number of dimes
     				 list.set(1, i2);
+    				 //we have to subtract both quarters and dimes
     				 int k3=(cents-25*i1-10*i2)/5;
     				 for (int i3=0;i3<=k3;i3++)
     				 {
+    					//setting current number of nickels and the rest are pennies
     					 list.set(2, i3);
     					 list.set(3, cents-25*i1-10*i2-5*i3);
-    					  					 
+    					 
+    					 //printing the information to the file
     					 text.println("["+list.get(0)+","+list.get(1)+
     							 ","+list.get(2)+","+list.get(3)+"]");
     				 }
     			 }
     		  }
+    		  //closing the file
               text.close();
               
               System.out.println("success...");    
