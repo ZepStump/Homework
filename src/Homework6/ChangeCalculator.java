@@ -1,7 +1,8 @@
 package Homework6;
 
 //import java.io.FileOutputStream;
-import java.io.FileWriter;
+//import java.io.FileWriter;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 
 /**
@@ -91,7 +92,7 @@ public class ChangeCalculator {
     	  try
     	  {    
               //creating a file
-    		  FileWriter text = new FileWriter("CoinCombinations.txt", true);    
+    		  PrintWriter text = new PrintWriter("src/Homework6/CoinCombinations.txt");    
               
     		  //I am going to use an ArrayList since, we going need to access specific elements
     		  //and arrays are the best for that.
@@ -115,10 +116,8 @@ public class ChangeCalculator {
     					 list.set(2, i3);
     					 list.set(3, cents-25*i1-10*i2-5*i3);
     					  					 
-    					 text.write("["+list.get(0)+",");
-    					 text.write(list.get(1)+",");
-    					 text.write(list.get(2)+",");
-    					 text.write(list.get(3)+"]");
+    					 text.println("["+list.get(0)+","+list.get(1)+
+    							 ","+list.get(2)+","+list.get(3)+"]");
     				 }
     			 }
     		  }
