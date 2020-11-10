@@ -25,10 +25,12 @@ public class Polynomial
 	public void addTerm(Term term1)
 	{
 		int a=0;
+		// for checking if we have already added or not yet
 		if (list.size()!=0)
 		{
 		for (int i=0;i<list.size();i++)
 		{
+			//checking and adding for the same exponent
 			if (term1.getExponent()==list.get(i).getExponent())
 			{
 				a=1;
@@ -41,6 +43,7 @@ public class Polynomial
 		}
 		for (int i=0;i<list.size();i++)
 		{
+			//adding to the place when the exponent if higher.
 			if ((term1.getExponent()>list.get(i).getExponent())&&(a==0))
 			{
 				list.add(i, term1);
@@ -81,6 +84,7 @@ public class Polynomial
 	{
 		String s = new String();
 		LinkedList<Term> pol = new LinkedList<>();
+		//making copy of the polynomial
 		for (int i=0;i<list.size();i++)
 		{
 			Term term1=new Term();
@@ -89,21 +93,27 @@ public class Polynomial
 			pol.add(term1);
 		}
 		
+		//general solution
 		for (int i=0;i<pol.size();i++)
 		{
 			String t;
+			//outputting string
 			int a=0;
+			//for sign purposes
 			t=pol.get(i).toString();
 			if (t.charAt(0)=='-')
 				a=1;
+			// setting t
 			if (t.length()!=0)
 			{
 				t=t.substring(1);
 			}
+			//sign things
 			if (a==0)
 				s=s+" + "+t;
 			if (a==1)
 				s=s+" - "+t;
+			// for first term
 			if (i==0)
 			{
 				if (a==0)
@@ -112,6 +122,7 @@ public class Polynomial
 					s="-"+t;
 			}
 		}
+		//if size is zero
 		if (pol.size()==0)
 		{
 			s="0";

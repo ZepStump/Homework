@@ -1,4 +1,5 @@
 package Homework3;
+//meanu class
 
 import java.util.Scanner;
 
@@ -11,9 +12,10 @@ public class Menu
 		Polynomial pol2=new Polynomial();
 		
 		
-		
+		// use a while loop so the user can use it several times
 		while(e!=0)
 		{
+			//simple text menu
 			System.out.println("=========================");
 			System.out.println("Polynomial 1: "+pol1.toString());
 			System.out.println("Polynomial 2: "+pol2.toString());
@@ -98,12 +100,17 @@ public class Menu
 		}
 	}
 	
+	//method for adding the terms to the polynomial
 	public static void add(Polynomial pol1, String p)
 	{
 		//String p=key.nextLine();
+
+		//"a" is a current position, "sign" is a sign 1 is positive, -1 is negative
 		int a=0,sign=1;
+		//working with the first element separately
 		for (int i=0;i<p.length();i++)
 		{
+			//checking the sign and then adding term to the polynomial
 			if ((a==0)&&((p.charAt(i)=='-')||(p.charAt(i)=='+')))
 					{
 						String f=p.substring(0,i-1);
@@ -120,6 +127,8 @@ public class Menu
 						a=i+2;									
 					}
 		}
+		// finding a term and adding it. Checking for sign and empty space after that
+		//since it could mess up with the negative power.
 		for (int i=a;i<p.length();i++)
 		{
 			if (((p.charAt(i)=='+')||(p.charAt(i)=='-'))&&(p.charAt(i+1)==' '))
@@ -139,6 +148,7 @@ public class Menu
 				a=i+2;
 			}
 		}
+		//working with the last one separately, because the char had some problems otherwise
 		if (a<p.length())
 		{
 			String f=p.substring(a);

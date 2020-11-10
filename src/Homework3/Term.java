@@ -30,10 +30,14 @@ public class Term implements Comparable<Term>
 	
 		
 		int a=0,b=0,c=0,e=0;
+		// "a" is coordinate of "x", "b" is just if there is a sign in the beginning, for looping purposes
+		// "c" is for coefficient 1, when we have coefficient 1
+		// "e" is for exponent 1;
 		
 		char signC='+',signE='+';
 		//sign of coefficient
 		
+		//checking for signs
 		if (t.charAt(0)=='+')
 		{
 			b=1;
@@ -46,7 +50,7 @@ public class Term implements Comparable<Term>
 			signC='-';
 		}
 		
-		
+		//finding 'x' coordinate
 		for (int i=0;i<t.length();i++)
 		{
 			if (t.charAt(i)=='x')
@@ -58,11 +62,13 @@ public class Term implements Comparable<Term>
 		//if exponent not zero
 		if (a!=0)
 		{
+			//setting coefficient
 			for (int i=b;i<a;i++)
 			{
 				int d=(int)t.charAt(i)-'0';
 				coefficient=10*coefficient+d;
 			}
+			//cecking for sign of the exponent
 			for (int i=b;i<t.length();i++)
 			{
 				if (t.charAt(i)=='^')
@@ -73,6 +79,7 @@ public class Term implements Comparable<Term>
 					a=i;
 				}	
 			}
+			//setting exponent
 			for (int i=a+1;i<t.length();i++)
 			{
 				int d=(int)t.charAt(i)-'0';
@@ -90,7 +97,7 @@ public class Term implements Comparable<Term>
 		}
 		
 		
-		
+		// if exponent or coefficient is zero
 		if((coefficient==0)&&(c==1))
 			coefficient=1;
 		if((exponent==0)&&(e==1))
