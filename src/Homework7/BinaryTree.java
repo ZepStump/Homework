@@ -1,5 +1,6 @@
 package Homework7;
 
-public class BinaryTree {
-
+public class BinaryTree 
+{
+	
 }
