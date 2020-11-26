@@ -1,33 +1,126 @@
 package Homework7;
 
-/**
- * MorseCodeTree : A BinaryTree, with Nodes of type Character to represent each letter of the English alphabet,
- * and a means of traversal to be used to decipher Morse code.
- *
- * @version 1.0
- */
+import java.util.Scanner;
+
 public class MorseCodeTree extends BinaryTree<Character> {
-
-    // TODO:
-    // Build this class, which includes the parent BinaryTree implementation in addition to
-    // the `translateFromMorseCode` and `readMorseCodeTree` methods. Documentation has been suggested for the former,
-    // where said exceptional cases are to be handled according to the corresponding unit tests.
-
-    /**
-     * Non-recursive method for translating a String comprised of morse code values through traversals
-     * in the MorseCodeTree.
-     *
-     * The given input is expected to contain morse code values, with '*' for dots and '-' for dashes, representing
-     * only letters in the English alphabet.
-     *
-     * This method will also handle exceptional cases, namely if a given token's length exceeds that of the tree's
-     * number of possible traversals, or if the given token contains a character that is neither '*' nor '-'.
-     *
-     * @param morseCode The given input representing letters in Morse code
-     * @return a String representing the decoded values from morseCode
-     */
-    public String translateFromMorseCode(String morseCode) {
-        return "";
+	
+	public MorseCodeTree()
+	{
+		createTreeFromFile();
+	}
+	
+	public void createTreeFromFile()
+	{
+		//making full graph of length 4.
+		BinaryTree<Character> MorseTree = new BinaryTree<Character>();
+		BinaryTree<Character> RightTree = new BinaryTree<Character>();
+		BinaryTree<Character> LeftTree = new BinaryTree<Character>();
+		MorseTree.root = new Node<Character>('?');
+		RightTree.root = new Node<Character>('?');
+		LeftTree.root = new Node<Character>('?');
+		for (int i=0;i<3;i++)
+		{
+		MorseTree = new BinaryTree('?', RightTree, LeftTree);
+		RightTree = MorseTree;
+		LeftTree = MorseTree;
+		}
+		this.root = MorseTree.root;
+		
+		
+		//adding the letters
+		Scanner scan = new Scanner("/Homework/src/Homework7/MorseCode.txt");
+		for (int i=0; i<26; i++)
+		{
+		String temp = scan.nextLine();
+		insertNodeIntoTree(temp);
+		}
+		scan.close();
+	}
+    
+	//inserting the character in right place
+	public void insertNodeIntoTree(String temp)
+	{
+		Node<Character> initialRoot = root;
+		char current = temp.charAt(0);
+		for (int j=2; j<temp.length(); j++) 
+		{
+			if (temp.charAt(j)=='-')
+			{
+				if (j==temp.length()-1)
+				{
+					root.right.setData(current);
+					root=initialRoot;
+				}
+				else {
+				root=root.right;}
+			}
+			if (temp.charAt(j)=='*')
+			{
+				if (j==temp.length()-1)
+				{
+					root.left.setData(current);
+					root=initialRoot;
+				}
+				else {
+				root=root.left;}
+			}
+		}
+	}
+	
+	public char decodeCharacter(String temp)
+	{
+		Node<Character> initialRoot = root;
+		char current = ' ';
+		for (int j=0; j<temp.length(); j++) 
+		{
+			if (temp.charAt(j)=='-')
+			{
+				if (j==temp.length()-1)
+				{
+					current=root.right.getData();
+					root=initialRoot;
+				}
+				else {
+				root=root.right;}
+			}
+			if (temp.charAt(j)=='*')
+			{
+				if (j==temp.length()-1)
+				{
+					current=root.left.getData();
+					root=initialRoot;
+				}
+				else {
+				root=root.left;}
+			}
+		}
+		
+		return current;
+	}
+	
+	public void readMorseCode()
+	{
+		
+	}
+	
+    public String translateFromMorseCode(String morseCode) 
+    {
+        String code = "";
+        int counter=0;
+    	for (int i=0; i<morseCode.length(); i++)
+        {
+        	if (morseCode.charAt(i)==' ')
+        	{
+        		counter=1;
+        		code = code + decodeCharacter(morseCode.substring(0,i));
+        		translateFromMorseCode(morseCode.substring(i,morseCode.length()));
+        	}
+        }
+    	if (counter==0)
+    	{
+    		code = code + decodeCharacter(morseCode);
+    	}
+    	return code;
     }
 
-} // End of class MorseCodeTree
+} 
