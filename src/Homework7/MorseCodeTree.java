@@ -1,8 +1,9 @@
 package Homework7;
 
+import java.io.File;
 import java.util.Scanner;
 
-public class MorseCodeTree extends BinaryTree<Character> {
+public class MorseCodeTree extends BinaryTree<Character>{
 	
 	public MorseCodeTree()
 	{
@@ -11,58 +12,77 @@ public class MorseCodeTree extends BinaryTree<Character> {
 	
 	public void createTreeFromFile()
 	{
-		//making full graph of length 4.
-		BinaryTree<Character> MorseTree = new BinaryTree<Character>();
-		BinaryTree<Character> RightTree = new BinaryTree<Character>();
-		BinaryTree<Character> LeftTree = new BinaryTree<Character>();
-		MorseTree.root = new Node<Character>('?');
-		RightTree.root = new Node<Character>('?');
-		LeftTree.root = new Node<Character>('?');
-		for (int i=0;i<3;i++)
-		{
-		MorseTree = new BinaryTree('?', RightTree, LeftTree);
-		RightTree = MorseTree;
-		LeftTree = MorseTree;
-		}
-		this.root = MorseTree.root;
-		
+		//making a tree
+		root = new Node<Character>('?');
 		
 		//adding the letters
-		Scanner scan = new Scanner("/Homework/src/Homework7/MorseCode.txt");
+		String[] list = new String[26];
+		
+		try {
+		File file = new File("src/Homework7/MorseCode.txt");
+		Scanner scan = new Scanner(file);
 		for (int i=0; i<26; i++)
 		{
-		String temp = scan.nextLine();
-		insertNodeIntoTree(temp);
+		list[i] = scan.nextLine();
 		}
 		scan.close();
-	}
+		}
+		catch(Exception e)
+		{
+			System.out.println("File not found");
+		}
+		
+		for (int i=0;i<26;i++)
+		{
+			insertNodeIntoTree(list[i]);
+		}
+		System.out.println(root.left.getData());
+		Node root1 = root.left;
+		System.out.println(root1.right.getData());
+		Node root2 = root.right;
+		System.out.println(root2.left.getData());
+		Node root3 = root2.left;
+		System.out.println(root3.right.getData());
+ }
     
 	//inserting the character in right place
 	public void insertNodeIntoTree(String temp)
 	{
 		Node<Character> initialRoot = root;
+		Node<Character> emptyNode = new Node<Character>('?');
 		char current = temp.charAt(0);
 		for (int j=2; j<temp.length(); j++) 
 		{
 			if (temp.charAt(j)=='-')
 			{
+				//checking if next node exists, if not add it
+				if (initialRoot.right==null)
+				{
+					initialRoot.right = new Node<Character>('?');
+				}
+				
+				//checking if it is last turn
 				if (j==temp.length()-1)
 				{
-					root.right.setData(current);
-					root=initialRoot;
+					initialRoot.right.setData(current);
 				}
-				else {
-				root=root.right;}
+				else 
+				initialRoot=initialRoot.right;
 			}
 			if (temp.charAt(j)=='*')
 			{
+				if (initialRoot.left==null)
+				{
+					initialRoot.left = new Node<Character>('?');
+				}
+				
+				//checking if it is last turn
 				if (j==temp.length()-1)
 				{
-					root.left.setData(current);
-					root=initialRoot;
+					initialRoot.left.setData(current);
 				}
-				else {
-				root=root.left;}
+				else 
+				initialRoot=initialRoot.left;
 			}
 		}
 	}
@@ -77,21 +97,19 @@ public class MorseCodeTree extends BinaryTree<Character> {
 			{
 				if (j==temp.length()-1)
 				{
-					current=root.right.getData();
-					root=initialRoot;
+					current=initialRoot.right.getData();
 				}
 				else {
-				root=root.right;}
+				initialRoot=initialRoot.right;}
 			}
 			if (temp.charAt(j)=='*')
 			{
 				if (j==temp.length()-1)
 				{
-					current=root.left.getData();
-					root=initialRoot;
+					current=initialRoot.left.getData();
 				}
 				else {
-				root=root.left;}
+				initialRoot=initialRoot.left;}
 			}
 		}
 		
@@ -113,7 +131,7 @@ public class MorseCodeTree extends BinaryTree<Character> {
         	{
         		counter=1;
         		code = code + decodeCharacter(morseCode.substring(0,i));
-        		translateFromMorseCode(morseCode.substring(i,morseCode.length()));
+        		code = code + translateFromMorseCode(morseCode.substring(i+1,morseCode.length()));
         	}
         }
     	if (counter==0)
