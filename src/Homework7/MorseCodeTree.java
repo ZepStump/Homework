@@ -11,9 +11,11 @@ public class MorseCodeTree extends BinaryTree<Character>{
 	
 	public MorseCodeTree()
 	{
+		//making a Morse tree
 		createTreeFromFile(file);
 	}
 	
+	//actually making a Morse tree
 	public void createTreeFromFile(File fileName)
 	{
 		//making a tree
@@ -23,7 +25,7 @@ public class MorseCodeTree extends BinaryTree<Character>{
 		String[] list = new String[26];
 		
 		try {
-		//File file = new File("src/Homework7/MorseCode.txt");
+	    //reading a file
 		Scanner scan = new Scanner(fileName);
 		for (int i=0; i<26; i++)
 		{
@@ -36,6 +38,7 @@ public class MorseCodeTree extends BinaryTree<Character>{
 			System.out.println("File not found");
 		}
 		
+		//inserting nodes
 		for (int i=0;i<26;i++)
 		{
 			insertNodeIntoTree(list[i]);
@@ -46,8 +49,9 @@ public class MorseCodeTree extends BinaryTree<Character>{
 	public void insertNodeIntoTree(String temp)
 	{
 		Node<Character> initialRoot = root;
-		Node<Character> emptyNode = new Node<Character>('?');
+		// actual character
 		char current = temp.charAt(0);
+		//start with two because first is a character and then an empty space
 		for (int j=2; j<temp.length(); j++) 
 		{
 			if (temp.charAt(j)=='-')
@@ -84,6 +88,7 @@ public class MorseCodeTree extends BinaryTree<Character>{
 		}
 	}
 	
+	//decoding a character
 	public char decodeCharacter(String temp)
 	{
 		Node<Character> initialRoot = root;
@@ -92,10 +97,12 @@ public class MorseCodeTree extends BinaryTree<Character>{
 		{
 			if (temp.charAt(j)=='-')
 			{
+				//if it is a last turn then we get Character
 				if (j==temp.length()-1)
 				{
 					current=initialRoot.right.getData();
 				}
+				//if it is not a last turn then we turn
 				else {
 				initialRoot=initialRoot.right;}
 			}
@@ -113,6 +120,7 @@ public class MorseCodeTree extends BinaryTree<Character>{
 		return current;
 	}
 	
+	//for menu purposes, just reading am alphabet
 	public void readMorseTree()
 	{
 		String[] list = new String[26];
@@ -161,6 +169,7 @@ public class MorseCodeTree extends BinaryTree<Character>{
         	if (morseCode.charAt(i)==' ' && count2 == 0)
         	{
         		count2++;
+        		//decoding first character
         		code = code + decodeCharacter(morseCode.substring(0,i));
         		code = code + translateFromMorseCode(morseCode.substring(i+1));
         	}
