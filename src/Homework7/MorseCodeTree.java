@@ -6,12 +6,15 @@ import java.util.Scanner;
 
 public class MorseCodeTree extends BinaryTree<Character>{
 	
+	//file for creating a tree, with alphabet
+	File file = new File("src/Homework7/MorseCode.txt");
+	
 	public MorseCodeTree()
 	{
-		createTreeFromFile();
+		createTreeFromFile(file);
 	}
 	
-	public void createTreeFromFile()
+	public void createTreeFromFile(File fileName)
 	{
 		//making a tree
 		root = new Node<Character>('?');
@@ -20,8 +23,8 @@ public class MorseCodeTree extends BinaryTree<Character>{
 		String[] list = new String[26];
 		
 		try {
-		File file = new File("src/Homework7/MorseCode.txt");
-		Scanner scan = new Scanner(file);
+		//File file = new File("src/Homework7/MorseCode.txt");
+		Scanner scan = new Scanner(fileName);
 		for (int i=0; i<26; i++)
 		{
 		list[i] = scan.nextLine();
@@ -110,6 +113,25 @@ public class MorseCodeTree extends BinaryTree<Character>{
 		return current;
 	}
 	
+	public void readMorseTree()
+	{
+		String[] list = new String[26];
+		try {
+			//File file = new File("src/Homework7/MorseCode.txt");
+			Scanner scan = new Scanner(file);
+			for (int i=0; i<26; i++)
+			{
+			list[i] = scan.nextLine();
+			System.out.println(list[i]);
+			}
+			scan.close();
+			}
+			catch(Exception e)
+			{
+				System.out.println("File not found");
+			}
+	}
+	
     public String translateFromMorseCode(String morseCode) 
     {
         String code = "";
@@ -144,7 +166,6 @@ public class MorseCodeTree extends BinaryTree<Character>{
         	}
         }
     	
-    	System.out.println("Final " + code);
     	return code;
     }
 
