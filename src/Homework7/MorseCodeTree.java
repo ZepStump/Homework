@@ -1,6 +1,7 @@
 package Homework7;
 
 import java.io.File;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class MorseCodeTree extends BinaryTree<Character>{
@@ -96,7 +97,7 @@ public class MorseCodeTree extends BinaryTree<Character>{
 				initialRoot=initialRoot.right;}
 			}
 			if (temp.charAt(j)=='*')
-			{
+			{				
 				if (j==temp.length()-1)
 				{
 					current=initialRoot.left.getData();
@@ -107,11 +108,6 @@ public class MorseCodeTree extends BinaryTree<Character>{
 		}
 		
 		return current;
-	}
-	
-	public void readMorseCode()
-	{
-		
 	}
 	
     public String translateFromMorseCode(String morseCode) 
@@ -125,6 +121,10 @@ public class MorseCodeTree extends BinaryTree<Character>{
         	{
         		count++;
         	}
+        	// checking for exception
+        	if (morseCode.charAt(i)!=' ' && morseCode.charAt(i)!='-' 
+        			&& morseCode.charAt(i)!='*')
+        		throw new InputMismatchException();
         }
         if (count==0)
     	{
