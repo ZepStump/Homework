@@ -36,13 +36,6 @@ public class MorseCodeTree extends BinaryTree<Character>{
 		{
 			insertNodeIntoTree(list[i]);
 		}
-		System.out.println(root.left.getData());
-		Node root1 = root.left;
-		System.out.println(root1.right.getData());
-		Node root2 = root.right;
-		System.out.println(root2.left.getData());
-		Node root3 = root2.left;
-		System.out.println(root3.right.getData());
  }
     
 	//inserting the character in right place
@@ -124,20 +117,34 @@ public class MorseCodeTree extends BinaryTree<Character>{
     public String translateFromMorseCode(String morseCode) 
     {
         String code = "";
-        int counter=0;
-    	for (int i=0; i<morseCode.length(); i++)
+        int count=0;
+        //checking for single character(base case)
+        for (int i=0; i<morseCode.length(); i++)
         {
         	if (morseCode.charAt(i)==' ')
         	{
-        		counter=1;
-        		code = code + decodeCharacter(morseCode.substring(0,i));
-        		code = code + translateFromMorseCode(morseCode.substring(i+1,morseCode.length()));
+        		count++;
         	}
         }
-    	if (counter==0)
+        if (count==0)
     	{
     		code = code + decodeCharacter(morseCode);
     	}
+        
+        //we need count here otherwise it would do multiple recursions
+        int count2 = 0;
+        //Translating all character using recursion
+    	for (int i=0; i<morseCode.length(); i++)
+        {
+        	if (morseCode.charAt(i)==' ' && count2 == 0)
+        	{
+        		count2++;
+        		code = code + decodeCharacter(morseCode.substring(0,i));
+        		code = code + translateFromMorseCode(morseCode.substring(i+1));
+        	}
+        }
+    	
+    	System.out.println("Final " + code);
     	return code;
     }
 
