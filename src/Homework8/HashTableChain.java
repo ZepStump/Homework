@@ -145,13 +145,38 @@ public class HashTableChain<K, V> implements Map<K, V> {
 	    // returns boolean if table has the searched for key
 	    @Override
 	    public boolean containsKey(Object key) {
-	    	// Fill Here
+	    	
+	    	int index = key.hashCode() % table.length;
+			if (index<0)
+				index +=table.length;
+			if (table[index]==null)
+				return false;
+		
+			for (Entry<K, V> nextItem : table[index])
+			{
+				if(nextItem.key.equals(key))
+					return true;
+			}
+			
+			return false;
 	    }
 
 	    // returns boolean if table has the searched for value
 	    @Override
 	    public boolean containsValue(Object value) {
-	    	// FILL HERE
+	    	
+	    	for (int i=0; i<table.length; i++)
+	    	{
+	    		if (table[i]!=null)
+	    		{
+	    		for (Entry<K, V> nextItem : table[i])
+	    		{
+	    			if (nextItem.getValue().equals(value))
+	    			return true;
+	    		}
+	    		}
+	    	}
+	    	return false;
 	    	
 	    }
 
