@@ -2,6 +2,7 @@ package Homework8;
 
 import java.util.AbstractSet;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.Map;
@@ -58,7 +59,6 @@ public class HashTableChain<K, V> implements Map<K, V> {
 	
 	  private class EntrySet extends AbstractSet<Map.Entry<K, V>> {
 
-		  
 	        @Override
 	        public Iterator<Map.Entry<K, V>> iterator() {
 	            return new SetIterator();
@@ -90,8 +90,12 @@ public class HashTableChain<K, V> implements Map<K, V> {
 	        	 {
 	                 return true;
 	             }
-	        	iter = table[index].iterator();
-	        	return iter.hasNext();
+	        	 if (index<0)
+	        		 index+=table.length;
+	        	 if (table[index]==null)
+	        		 return false;
+	        	 iter = table[index].iterator();
+	        	 return iter.hasNext();
 	        }
 
 	        @Override
@@ -308,7 +312,19 @@ public class HashTableChain<K, V> implements Map<K, V> {
 	    // returns a view of the keys in set view
 	    @Override
 	    public Set<K> keySet() {
-	    	// FILL HERE
+	    	
+	    	Set<K> keySet = new HashSet<K>(size());
+	        for (LinkedList<Entry<K,V>> index : table) {
+	            if (index!=null)
+	            {
+	        	for (Entry<K,V> entry : index) {
+	                if (entry != null) {
+	                    keySet.add(entry.key);
+	                }
+	            }
+	            }
+	        }
+	        return keySet;
 	    }
 
 	    // throws UnsupportedOperationException
@@ -326,8 +342,12 @@ public class HashTableChain<K, V> implements Map<K, V> {
 
 	    @Override
 	    public boolean equals(Object o) {
-	    	// FILL HERE
-
+	    	if (o==this)
+	    		return true;
+	    	if (!(o instanceof HashTableChain)) 
+	            return false; 
+	        
+	    		return false;
 	    }
 
 	    /*
