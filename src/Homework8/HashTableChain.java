@@ -5,12 +5,13 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.Map;
+import java.util.NoSuchElementException;
 import java.util.Set;
 
 public class HashTableChain<K, V> implements Map<K, V> {
 	
-	private static class Entry<K, V>{
-		
+	private static class Entry<K, V> implements Map.Entry<K, V>
+	{		
 		private K key;
 		private V value;
 		
@@ -57,7 +58,7 @@ public class HashTableChain<K, V> implements Map<K, V> {
 	
 	  private class EntrySet extends AbstractSet<Map.Entry<K, V>> {
 
-
+		  
 	        @Override
 	        public Iterator<Map.Entry<K, V>> iterator() {
 	            return new SetIterator();
@@ -85,17 +86,37 @@ public class HashTableChain<K, V> implements Map<K, V> {
 
 	        @Override
 	        public boolean hasNext() {
-	        	// FILL HERE
+	        	 if (iter != null && iter.hasNext()) 
+	        	 {
+	                 return true;
+	             }
+	        	iter = table[index].iterator();
+	        	return iter.hasNext();
 	        }
 
 	        @Override
 	        public Map.Entry<K, V> next() {
-	        	// FILL HERE
+	        	if (iter.hasNext()) 
+	        	{                
+	                lastItemReturned = iter.next();
+	                return lastItemReturned;
+	            } 
+	        	else 
+	        	{
+	                throw new NoSuchElementException();
+	            }
 	        }
 
 	        @Override
 	        public void remove() {
-	        	// FILL HERE
+	        	if (iter.hasNext()==false)
+	        	{
+	        		throw new NoSuchElementException();
+	        	}
+	        	else {
+	        		iter.remove();
+	        		lastItemReturned = null;
+	        	}
 	        }
 	    }
 
@@ -185,7 +206,23 @@ public class HashTableChain<K, V> implements Map<K, V> {
 	     * Resizes the table to be 2X +1 bigger than previous
 	     */
 	    private void rehash() {
-	    	// FILL HERE
+	    	LinkedList<Entry<K, V>>[] OldTable = table;
+	    	table = new LinkedList[2*OldTable.length];
+	    	numKeys = 0;
+	    	for (int i = 0; i < OldTable.length; i++)
+	    	{
+	    		if (OldTable[i]!=null)
+	    		{
+	    			for (int j=0; j<OldTable[i].size();j++)
+	    			{
+	    				/*Entry<K, V> element = 
+	    						new Entry(OldTable[i].get(j).getKey(),OldTable[i].get(j).getValue());
+	    				table[i].set(j,element);*/
+	    				put(OldTable[i].get(j).getKey(),OldTable[i].get(j).getValue());
+	    				//numKeys++;
+	    			}
+	    		}
+	    	}
 	    }
 
 	    @Override
@@ -218,8 +255,11 @@ public class HashTableChain<K, V> implements Map<K, V> {
 
 	    // empties the table
 	    @Override
-	    public void clear() {
-	    	// Fill HERE
+	    public void clear() {  
+	    	
+	    	LinkedList<Entry<K, V>>[] empty = null;
+	    	table = empty;
+	    	numKeys = 0;
 	    }
 
 	    // returns a view of the keys in set view
@@ -238,9 +278,7 @@ public class HashTableChain<K, V> implements Map<K, V> {
 	    // returns a set view of the hash table
 	    @Override
 	    public Set<Map.Entry<K, V>> entrySet() {
-	    	// FILL HERE
-
-
+	    	 return new EntrySet();
 	    }
 
 	    @Override
@@ -249,9 +287,10 @@ public class HashTableChain<K, V> implements Map<K, V> {
 
 	    }
 
+	    /*
 	    @Override
 	    public int hashCode() {
 	    	//FILL HERE
 
-	    }
+	    }*/
 }
