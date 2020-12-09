@@ -1,9 +1,11 @@
 package Homework8;
 
 import java.util.AbstractSet;
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.Map;
+import java.util.Set;
 
 public class HashTableChain<K, V> implements Map<K, V> {
 	
@@ -110,13 +112,13 @@ public class HashTableChain<K, V> implements Map<K, V> {
 	    // returns number of keys
 	    @Override
 	    public int size() {
-	        // FILL HERE
+	        return numKeys;
 	    }
 
 	    // returns boolean if table has no keys
 	    @Override
 	    public boolean isEmpty() {
-	    	// FILL HERE
+	    	return (numKeys==0);
 	    }
 
 	    // returns boolean if table has the searched for key
