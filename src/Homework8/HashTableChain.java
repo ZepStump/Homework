@@ -219,7 +219,6 @@ public class HashTableChain<K, V> implements Map<K, V> {
 	    						new Entry(OldTable[i].get(j).getKey(),OldTable[i].get(j).getValue());
 	    				table[i].set(j,element);*/
 	    				put(OldTable[i].get(j).getKey(),OldTable[i].get(j).getValue());
-	    				//numKeys++;
 	    			}
 	    		}
 	    	}
@@ -242,9 +241,28 @@ public class HashTableChain<K, V> implements Map<K, V> {
 
 	    // remove an entry at the key location
 	    // return removed value
+	    //!!!!!!!! need to check with contains method
 	    @Override
 	    public V remove(Object key) {
-	    	// FILL HERE
+	    	int index = key.hashCode() % table.length;
+	    	if (index<0)
+	    		index+=table.length;
+	    	if (table[index]==null)
+	    		return null;
+	    	for (Entry<K, V> nextItem : table[index])
+	    	{
+	    		if (nextItem.key.equals(key))
+	    		{
+	    			V oldValue = nextItem.getValue();
+	    			table[index].remove(nextItem);
+	    			numKeys--;
+	    			if (table[index].isEmpty())
+	    				table[index]=null;
+	    			return oldValue;
+	    		}
+	    	}
+	    	
+	    	return null;
 	    }
 
 	    // throws UnsupportedOperationException
