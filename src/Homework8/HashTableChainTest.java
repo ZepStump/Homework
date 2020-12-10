@@ -140,11 +140,11 @@ public class HashTableChainTest {
         // Compares the specified object with this map for equality.
         populateMapWithPut(13);
 
-        Map<String, Integer> other = new Hashtable<String, Integer>();
+        Map<String, Integer> other = new HashTableChain<String, Integer>();
         for (int i = 0; i < 13; i ++) {
             other.put(Integer.toString(i), i);
         }
-
+        
         assertTrue(hashTable.equals(other));
     }
 

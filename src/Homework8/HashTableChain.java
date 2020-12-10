@@ -59,7 +59,8 @@ public class HashTableChain<K, V> implements Map<K, V> {
 	
 	  private class EntrySet extends AbstractSet<Map.Entry<K, V>> {
 
-	        @Override
+		  
+		  	@Override
 	        public Iterator<Map.Entry<K, V>> iterator() {
 	            return new SetIterator();
 	        }
@@ -86,16 +87,37 @@ public class HashTableChain<K, V> implements Map<K, V> {
 
 	        @Override
 	        public boolean hasNext() {
-	        	 if (iter != null && iter.hasNext()) 
-	        	 {
-	                 return true;
-	             }
-	        	 if (index<0)
-	        		 index+=table.length;
-	        	 if (table[index]==null)
-	        		 return false;
-	        	 iter = table[index].iterator();
-	        	 return iter.hasNext();
+	        	if (iter != null && iter.hasNext())
+				{
+					return true ;
+				}
+				else if (index < table.length)
+				{
+					while (table[index] == null)
+					{
+						index++;
+						if (index >= table.length)
+						{
+							return false ;
+						}
+					}
+					
+					iter = table[index].iterator() ;	
+					index++;
+					
+					if (index < table.length)
+					{
+						return hasNext() ;
+					}
+					else
+					{
+						return iter.hasNext() ;
+					}
+				}
+				else
+				{
+					return false ;
+				}
 	        }
 
 	        @Override
@@ -337,17 +359,21 @@ public class HashTableChain<K, V> implements Map<K, V> {
 	    // returns a set view of the hash table
 	    @Override
 	    public Set<Map.Entry<K, V>> entrySet() {
+	    	
 	    	 return new EntrySet();
 	    }
 
 	    @Override
 	    public boolean equals(Object o) {
-	    	if (o==this)
-	    		return true;
-	    	if (!(o instanceof HashTableChain)) 
-	            return false; 
-	        
-	    		return false;
+	    	
+	    	if (o == null || getClass() != o.getClass())
+			{
+				return false ;
+			}
+			HashTableChain<K, V> other = (HashTableChain<K, V>) o ;
+			System.out.println(toString());
+			System.out.println(other.toString());
+			return toString().equals(other.toString()) ;
 	    }
 
 	    /*
