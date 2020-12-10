@@ -371,8 +371,6 @@ public class HashTableChain<K, V> implements Map<K, V> {
 				return false ;
 			}
 			HashTableChain<K, V> other = (HashTableChain<K, V>) o ;
-			System.out.println(toString());
-			System.out.println(other.toString());
 			return toString().equals(other.toString()) ;
 	    }
 

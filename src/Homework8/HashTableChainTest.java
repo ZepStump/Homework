@@ -152,7 +152,7 @@ public class HashTableChainTest {
     public void testEqualsFalse() {
         populateMapWithPut(30);
 
-        Map<String, Integer> other = new Hashtable<String, Integer>();
+        Map<String, Integer> other = new HashTableChain<String, Integer>();
         for (int i = 0; i < 29; i ++) {
             other.put(Integer.toString(i), i);
         }
