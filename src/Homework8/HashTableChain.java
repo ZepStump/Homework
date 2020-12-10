@@ -3,6 +3,7 @@ package Homework8;
 import java.util.AbstractSet;
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.Map;
@@ -292,7 +293,6 @@ public class HashTableChain<K, V> implements Map<K, V> {
 
 	    // remove an entry at the key location
 	    // return removed value
-	    //!!!!!!!! need to check with contains method
 	    @Override
 	    public V remove(Object key) {
 	    	int index = key.hashCode() % table.length;
@@ -374,10 +374,21 @@ public class HashTableChain<K, V> implements Map<K, V> {
 			return toString().equals(other.toString()) ;
 	    }
 
-	    /*
+	    
 	    @Override
 	    public int hashCode() {
-	    	//FILL HERE
+	    	
+	    	Iterator<Map.Entry<K, V>> temp = new SetIterator() ;
+	    	Map<String, Integer> other = new Hashtable<String, Integer>();
+			
+			while(temp.hasNext())
+			{
+				Map.Entry<K, V> empty = temp.next();
+				String i = (String) empty.getKey();
+				int j = (int) empty.getValue();
+				other.put(i,j);
+			}		
+			return other.hashCode();
 
-	    }*/
+	    }
 }
